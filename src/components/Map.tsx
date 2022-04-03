@@ -4,19 +4,24 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { MapContext } from "../services/MapContext";
 import { MapsService } from "../services/MapsService";
 import { Coords, distBetweenCoords } from "../util/haversine";
+import * as THREE from "three";
+import { latLngToVector3, ThreeJSOverlayView } from "@googlemaps/three";
 
 const METERS_PER_POINT = 10;
 
 export const MapView = () => {
-  const { map, polyline } = useContext(MapContext);
+  const { map, polyline, scene } = useContext(MapContext);
 
   const [started, setStarted] = useState(false);
 
   const toggleStarted = useCallback(() => {
-    setStarted(!started);
-
     const points = polyline.getPath().getArray();
 
+    if (points.length <= 1) {
+      return;
+    }
+
+    setStarted(!started);
     const approxPoints: Coords[] = [];
     for (let i = 0; i < points.length - 1; i++) {
       const dist = google.maps.geometry.spherical.computeDistanceBetween(
@@ -35,27 +40,54 @@ export const MapView = () => {
         approxPoints.push({ lat: latlng.lat(), lng: latlng.lng() });
       }
     }
+    // new ThreeJSOverlayView({
+    //   scene,
+    //   map,
+    // });
+    // // Create a box mesh
+    // const box = new THREE.Mesh(
+    //   new THREE.BoxBufferGeometry(10, 50, 10),
+    //   new THREE.MeshNormalMaterial()
+    // );
 
-    // console.log(approxPoints);
+    // box.position.setY(25);
+
+    // console.log(scene);
+    // scene.add(box);
+
     let count = 0;
 
+    // const animate = () => {
+    //   if (count >= approxPoints.length) return;
+
+    //   box.position.lerp(latLngToVector3(approxPoints[count]), 0.7);
+    // };
+    // // console.log(approxPoints);
+
     const renderNext = () => {
+      if (count >= approxPoints.length) {
+        setStarted(false);
+        // scene.remove(box);
+        return;
+      }
+
       map.panTo(approxPoints[count]);
+      // requestAnimationFrame(animate);
       count++;
-      if (count < approxPoints.length) {
-        setTimeout(renderNext, 100);
-      }
-      else {
-        setStarted(false)
-      }
+      setTimeout(renderNext, 100);
     };
     renderNext();
-  }, [started, polyline]);
+    // requestAnimationFrame(animate);
+  }, [started, polyline, scene]);
 
   useEffect(() => {
     if (!map) return;
     MapsService.initWebGLOverlayView(map);
-  }, [map]);
+    // new ThreeJSOverlayView({
+    //   scene,
+    //   map,
+    // });
+  }, [map, scene]);
 
   return (
     <Box sx={{ position: "relative", flex: 2, height: "100%" }}>
