@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Disables google logo watermark thing */
+.pac-container::after {
+  background-image: none !important;
+  height:0;
+}

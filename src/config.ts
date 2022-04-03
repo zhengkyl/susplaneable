@@ -1,6 +1,7 @@
 export const apiOptions = {
   apiKey: import.meta.env.VITE_MAPS_API_KEY as string,
   version: "beta",
+  libraries:["places" as const]
 };
 
 export const mapOptions = {

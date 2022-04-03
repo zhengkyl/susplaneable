@@ -3,6 +3,7 @@ import { apiOptions, mapOptions } from "../config";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+
 const initMap = async () => {
   const mapDiv = document.querySelector<HTMLElement>("#map")!;
   const apiLoader = new Loader(apiOptions);
