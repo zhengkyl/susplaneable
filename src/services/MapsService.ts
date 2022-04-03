@@ -8,6 +8,7 @@ const initMap = async () => {
   const mapDiv = document.querySelector<HTMLElement>("#map")!;
   const apiLoader = new Loader(apiOptions);
   await apiLoader.load();
+
   return new google.maps.Map(mapDiv, mapOptions);
 };
 

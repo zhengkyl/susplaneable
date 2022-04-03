@@ -11,10 +11,8 @@ import {
   useState,
 } from "react";
 import { MapContext } from "../services/MapContext";
-interface Coords {
-  lat: number;
-  lng: number;
-}
+import { Coords } from "../util/haversine";
+
 interface WaypointInputProps {
   index: number;
   updateWaypoint: (index: number, coords?: Coords) => void;

@@ -6,11 +6,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 import { MapContext } from "../services/MapContext";
 import { clampLat, clampLng } from "../util/latlng";
+import { Coords } from "../util/haversine";
 
-interface Coords {
-  lat: number;
-  lng: number;
-}
 
 interface WaypointInputProps {
   index: number;

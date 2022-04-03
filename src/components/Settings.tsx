@@ -6,10 +6,7 @@ import { MapContext } from "../services/MapContext";
 import Button from "@mui/material/Button";
 import { WaypointAddress } from "./WaypointAddress";
 import { WaypointClick } from "./WaypointClick";
-interface Coords {
-  lat: number;
-  lng: number;
-}
+import { Coords } from "../util/haversine";
 
 interface Waypoint {
   coords?: Coords;
@@ -23,7 +20,8 @@ export const Settings = () => {
     { id: "startwp", click: false },
   ]);
 
-  const [dblClkListener, setDblClkListener] = useState<google.maps.MapsEventListener>();
+  const [dblClkListener, setDblClkListener] =
+    useState<google.maps.MapsEventListener>();
 
   useEffect(() => {
     if (!map) return;
@@ -93,7 +91,7 @@ export const Settings = () => {
   };
 
   return (
-    <Box sx={{ flex: 1, p: 2 }}>
+    <Box sx={{ flex: 1, p: 2, height: "100vh", boxSizing: "border-box", overflow:"auto" }}>
       <Box sx={{ "& > *": { mb: 2 } }}>
         {waypoints.map((wp, index) =>
           wp.click ? (
