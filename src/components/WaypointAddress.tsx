@@ -19,7 +19,7 @@ interface WaypointInputProps {
   index: number;
   updateWaypoint: (index: number, coords?: Coords) => void;
 }
-export const WaypointInput = ({
+export const WaypointAddress = ({
   index,
   updateWaypoint,
 }: WaypointInputProps) => {
@@ -30,18 +30,9 @@ export const WaypointInput = ({
   const [value, setValue] = useState("");
   const [marker, setMarker] = useState<google.maps.Marker>();
 
-  // const [coords, setCoords] = useState<Coords | undefined>();
   const onChangeValue: ChangeEventHandler<HTMLInputElement> = (e) =>
     setValue(e.target.value);
 
-  // const coordsFromValue = (input: string) => {
-  //   geocoder
-  //     .geocode({ address: input })
-  //     .then((result) => {
-  //       console.log(result);
-  //     })
-  //     .catch((e) => console.log(e));
-  // };
 
   useEffect(() => {
     if (!map) return;
